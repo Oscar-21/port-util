@@ -1,0 +1,49 @@
+#!/bin/bash
+
+ACTION="$1"
+PORT="$2"
+
+if [[ $ACTION = "--kill" ]]; then
+    if [[ $PORT =~ ^[0-9]{4}$ ]]; then
+      kill "$(lsof -t -i:"$PORT")"
+      echo "kill"
+    else
+        echo ""
+        echo "Usage:"
+        echo ""
+        echo "port --get-pid 1234"
+        echo "port --kill 1234"
+        echo ""
+        exit 1
+    fi
+elif [[ $ACTION = "--kill-force" ]]; then
+      kill -9 "$(lsof -t -i:"$PORT")"
+elif [[ $ACTION = "--get-pid" ]]; then
+    if [[ $PORT =~ ^[0-9]{4}$ ]]; then
+        lsof -i:"$PORT"
+    else
+        echo ""
+        echo "Usage:"
+        echo ""
+        echo "port-util --get-pid 1234"
+        echo "port-util --kill 1234"
+        echo ""
+        exit 1
+    fi
+elif [[ $ACTION = "help" ]]; then
+        echo ""
+        echo "Usage:"
+        echo ""
+        echo "port-util --get-pid 1234"
+        echo "port-util --kill 1234"
+        echo ""
+        exit 1
+else
+        echo ""
+        echo "Usage:"
+        echo ""
+        echo "port-util --get-pid 1234"
+        echo "port-util --kill 1234"
+        echo ""
+        exit 1
+fi
